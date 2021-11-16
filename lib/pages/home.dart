@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_firebase/pages/firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -30,6 +32,14 @@ class _HomePageState extends State<HomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  void _onItemTapped(int index) {
+    if (index == 1) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const FirestorePage();
+      }));
+    }
   }
 
   @override
@@ -81,6 +91,21 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calculate),
+            label: 'Home',
+            backgroundColor: Colors.redAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.send_and_archive),
+            label: 'Firestore',
+            backgroundColor: Colors.redAccent,
+          ),
+        ],
+        onTap: _onItemTapped,
+      ),
     );
   }
 }
